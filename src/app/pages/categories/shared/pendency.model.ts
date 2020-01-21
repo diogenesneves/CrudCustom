@@ -4,6 +4,8 @@ export class Pendency{
         public nome?: string,
         public descricao?: string,
         public corDoBanho?: string,
-        public foto?: string
+        public dataPedido?: string,
+        public foto?: string,
+        public status?: boolean
     ){}
 }

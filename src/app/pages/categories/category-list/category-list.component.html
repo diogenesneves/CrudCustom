@@ -21,22 +21,29 @@
 </div>
 
 <table class="table table-hover">
-   <thead>
-       <tr>
-           <th>Pendentes</th>
-           <th>Ações</th>
-       </tr>
-   </thead> 
-   <tbody>
-       <tr *ngFor="let pendency of pendencies">
-           <td>
-               <strong>Teste</strong><br>
-               <small>  tetetsgxtfetfdetfe</small>
-           </td>
-           <td>
-               <a [routerLink]="[pendency.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
-               <button (click)="deletePendency(pendency)" class="btn btn-outline-danger btn-sm">Excluir</button>
-           </td>
-       </tr>
-   </tbody>
-</table>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome Revendedora</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Cor</th>
+        <th scope="col">Data</th>
+        <th scope="col">Status</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pendency of pendencies">
+        <td>{{pendency.id}}</td>
+        <td>{{pendency.nome}}</td>
+        <td>{{pendency.descricao}}</td>
+        <td>{{pendency.corDoBanho}}</td>
+        <td>{{pendency.dataPedido}}</td>
+        <td>{{pendency.status}}</td>
+        <td>
+            <a [routerLink]="[pendency.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
+            <button (click)="deletePendency(pendency)" class="btn btn-outline-danger btn-sm">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

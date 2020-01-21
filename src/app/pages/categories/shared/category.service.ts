@@ -11,7 +11,7 @@ import { Pendency } from "./pendency.model";
 })
 export class CategoryService {
 
-  private apiPath: string = "api/"
+  private apiPath: string = "api/pendencies"
 
   constructor(private http: HttpClient) { }
 

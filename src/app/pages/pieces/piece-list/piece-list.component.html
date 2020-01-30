@@ -4,7 +4,7 @@
             <a routerLink="/">Home</a>
         </li>
         <li class="breadcrumb-item active">
-            Pendentes
+            Lista de Peças
         </li>
     </ol>
 </nav>
@@ -12,33 +12,33 @@
 <div class="row mb-4">
     <div class="col-md">
         <h1 class="h2 border-left pl-2">
-            Pendentes
+            Lista de Peças
         </h1>    
     </div>
     <div class="col">
-        <a routerLink="new" class="btn btn-success float-right"> + Novo Pedido</a>
+        <a routerLink="new" class="btn btn-success float-right"> + Nova Peça</a>
     </div>
 </div>
 
-<table class="table table-hover">
-    <thead>
+<input type="text" [(ngModel)]="pendencies.nome" placeholder="Pesquisar..." class="ml-3"/>
+
+<table width="98%" class=" table-sm table-hover ml-3 table-bordered">
+    <thead class="thead-light">
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Nome Revendedora</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Cor</th>
-        <th scope="col">Data</th>
+        <th scope="col">Nome da peça</th>
+        <th scope="col">Código</th>
+        <th scope="col">Valor</th>
         <th scope="col">Status</th>
         <th scope="col">Ações</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let pendency of pendencies">
+      <tr *ngFor="let pendency of pendencies | customerNomeFilter:pendencies.nome; let i = index">
         <td>{{pendency.id}}</td>
         <td>{{pendency.nome}}</td>
-        <td>{{pendency.descricao}}</td>
-        <td>{{pendency.cordobanho}}</td>
-        <td>{{pendency.datapedido}}</td>
+        <td>{{pendency.codigo}}</td>
+        <td>{{pendency.valor}}</td>
         <td>{{pendency.status}}</td>
         <td>
             <a [routerLink]="[pendency.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
@@ -46,4 +46,5 @@
         </td>
       </tr>
     </tbody>
+   
   </table>

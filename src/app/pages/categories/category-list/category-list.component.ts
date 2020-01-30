@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../shared/category.service';
+import { PendencyService } from '../shared/pendency.service';
 import { Pendency } from '../shared/pendency.model';
 
 @Component({
@@ -11,12 +11,12 @@ export class CategoryListComponent implements OnInit {
 
   pendencies: Pendency[] = [];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: PendencyService) { }
 
   ngOnInit() {
     this.categoryService.getAll().subscribe(
       pendencies => this.pendencies = pendencies,
-      error => alert('Erro ao carregar a lista')
+      error => alert('Erro ao carregar a lista' )
     )
   }
 

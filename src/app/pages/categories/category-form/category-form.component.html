@@ -1,1 +1,65 @@
-<p>category-form works!</p>
+<nav class="mb-4">
+    <ol class="breadcrumb" style="background-color: #eed4e7;">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/pendencies">Pendentes</a></li>
+        <li class="breadcrumb-item active">{{pageTitle}}</li>
+    </ol>
+</nav>
+
+<div class="row mb-4">
+    <div class="col-md">
+        <h1 class="h2 border-left pl-2">
+            {{pageTitle}}
+        </h1>    
+    </div>
+    <div class="col">
+        <a routerLink="/pendencies" class="btn btn-light float-right"> << Voltar</a>
+    </div>
+</div>
+
+<form [formGroup]="pendencyForm" (submit)="submitForm()">
+    <div class="card">
+        <div class="card-header">
+            Informações sobre o pedido
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="name">Nome da revendedora</label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome">
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="name">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" formControlName="descricao">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="status">Cor do Banho</label>
+                    <select name="corDoBanho" id="corDoBanho" class="form-control" formControlName="corDoBanho">
+                        <option value="rodioNegro">Ródio Negro</option>
+                        <option value="rodioClaro">Ródio Claro</option>
+                        <option value="ouro">Ouro</option>
+                        <option value="rose">Rose</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control" formControlName="status">
+                    <option value="false">Pendente</option>
+                    <option value="true">Entregue</option>
+                </select>
+                </div>
+
+                <div class="form-group col-md-8">
+                    <label for="name">Obs:</label>
+                    <input type="text" class="form-control" id="obs" formControlName="obs">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="submittingForm || pendencyForm.invalid" type="submit" class="btn btn-primary btn-lg float-right mt-3">
+        Salvar
+    </button>
+
+</form>

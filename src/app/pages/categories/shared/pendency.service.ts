@@ -9,17 +9,18 @@ import { Pendency } from "./pendency.model";
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class PendencyService {
 
-  private apiPath: string = "api/pendencies"
+  private apiPath: string = "http://sis.sandrapelincer.com.br/api/"
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Pendency[]>{
-    return this.http.get(this.apiPath).pipe(
+    return this.http.get(`${this.apiPath}${'customOrders/index.json'}`).pipe(
       catchError(this.handleError),
-      map(this.jsonDataToPendencies)
-    )
+      map(res => {
+        return res.data;
+      }))
   }
 
   getById(id: number): Observable<Pendency>{

@@ -1,0 +1,82 @@
+<nav class="mb-4">
+    <ol class="breadcrumb" style="background-color: #eed4e7;">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/pieces">Pendentes</a></li>
+        <li class="breadcrumb-item active">{{pageTitle}}</li>
+    </ol>
+</nav>
+
+<div class="row mb-4">
+    <div class="col-md">
+        <h1 class="h2 border-left pl-2">
+            {{pageTitle}}
+        </h1>    
+    </div>
+    <div class="col">
+        <a routerLink="/pieces" class="btn btn-light float-right"> << Voltar</a>
+    </div>
+</div>
+
+<form [formGroup]="pieceForm" (submit)="submitForm()">
+    <div class="card">
+        <div class="card-header">
+            Informações sobre a peça
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="col-md-2 mb-2 ml-4" *ngIf="chargeFiles.length">
+                        <img class="rounded imagePreview mt-2" src="http://sis.sandrapelincer.com.br/api/files/CustomPieces/photo/MOV_INFORMATIVO_JAN_2020_214_POP_UP%20(1).png">
+            </div>
+                <div class="row col-md-10">
+                    <div class="form-group">
+                        <h3 class="first mb-3">{{imageTitle}}</h3>
+                        <p-fileUpload class="col-md-6"  previewWidth="110" chooseLabel="Escolher" [showUploadButton]="false" [showCancelButton]="false" 
+                        name="demo[]" multiple="false" customUpload="true" type="file" accept="image/*" maxFileSize="1000000" (onSelect)="showPreview($event)">
+                            <ng-template pTemplate="toolbar">
+                                <ul *ngIf="uploadedFiles.length">
+                                    <li *ngFor="let file of uploadedFiles"></li>
+                                </ul>
+                            </ng-template>
+                        </p-fileUpload>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="name">Código</label>
+                    <input type="text" class="form-control" id="codigo" formControlName="codigo">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="tipo">Tipo</label>
+                    <select name="tipo" id="tipo" class="form-control" formControlName="tipo">
+                        <option value="semiJoia">Semi Joia</option>
+                        <option value="ouro">Ouro</option>
+                        <option value="prata">Prata</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="name">Valor</label>
+                    <input type="text" class="form-control" id="valor" formControlName="valor">
+                </div>
+                <div class="form-group col-md-2">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-control" formControlName="status">
+                    <option value="true">Ativo</option>
+                    <option value="false">Inativo</option>
+                </select>
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="name">Obs:</label>
+                    <input type="text" class="form-control" id="obs" formControlName="obs">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="submittingForm || pieceForm.invalid" type="submit" class="btn btn-primary btn-lg float-right mt-3">
+        Salvar
+    </button>
+
+</form>

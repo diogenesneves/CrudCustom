@@ -8,6 +8,7 @@ import {PendencyService} from '../shared/pendency.service'
 import { switchMap } from 'rxjs/operators'
 
 import toastr from "toastr"
+import { PieceService } from '../../pieces/shared/piece.service';
 
 @Component({
   selector: 'app-category-form',
@@ -34,33 +35,63 @@ export class CategoryFormComponent implements OnInit {
   serverErrorMessages: string[] = null;
   submittingForm: boolean =false;
   pendency: Pendency = new Pendency();
+  customPiece: any[] = [];
+  photo: string = "";
+  photoShow: boolean = false;
+  images: any[];
+  filteredPieces: any[];
+  piece: string;
+  matchID: string = "";
+
+  nomePeca: string;
   
   constructor(
     private pendencyService: PendencyService,
+    private pieceService: PieceService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.setCurrentAction();
     this.buildPendencyForm();
     this.loadPendency();
+    this.loadPiece();
   }
   ngAfterContentChecked(): void {
-    //Called after every check of the component's or directive's content.
-    //Add 'implements AfterContentChecked' to the class.
     this.setPageTitle();
   }
 
   submitForm(){
     this.submittingForm = true;
-    if(this.currentAction = "new")
+    if(this.currentAction == "new")
       this.createPendency();
     else
       this.updatePendency();
   }
-
+  filterPieces(event) {
+    console.log(this.customPiece, "piece")
+    this.filteredPieces = [];
+    for(let i = 0; i < this.customPiece.length; i++) {
+        let piece = this.customPiece[i].nome;
+        if(piece.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+            this.filteredPieces.push(piece);
+        }
+    }
+  }
+  matchId(data){
+    var index,value;
+    for (index = 0; index < this.customPiece.length; ++index) {
+      value = this.customPiece[index].nome;
+    if (value === data) {
+        this.matchID = this.customPiece[index].id;
+        this.photo = this.customPiece[index].photo;
+        this.photoShow = true;
+        break;
+      }
+    }
+  }
   // PRIVATE METHODS
 
   private setCurrentAction() {
@@ -74,12 +105,11 @@ export class CategoryFormComponent implements OnInit {
     this.pendencyForm = this.formBuilder.group({
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(5)]],
+      custom_piece_id: [null,Validators.required],
       descricao: [null, [Validators.required, Validators.minLength(5)]],
-      corDoBanho: [null, [Validators.required]],
-      dataPedido: [null, [Validators.required]],
+      cordobanho: [null, [Validators.required]],
       status: [false, [Validators.required]],
       obs: [null],
-
     })
   }
 
@@ -91,12 +121,29 @@ export class CategoryFormComponent implements OnInit {
       )
       .subscribe(
         (pendency) => {
-          this.pendency = pendency;
-          this.pendencyForm.patchValue(this.pendency) // binds loaded pendency data to pendencyForm
+          this.pendency = pendency[0];
+          this.matchID = pendency[0].custom_piece_id;
+          this.photo = pendency[0].custom_piece.photo;
+          this.photoShow = true;
+          this.pendencyForm.patchValue(
+            {id: pendency[0].id,
+            nome: pendency[0].nome,
+            custom_piece_id: pendency[0].custom_piece.nome,
+            descricao: pendency[0].descricao,
+            cordobanho: pendency[0].cordobanho,
+            status: pendency[0].status,
+            obs: pendency[0].obs}
+          ) // binds loaded pendency data to pendencyForm
         },
         (error) => alert('Ocorreu um erro no servidor, tente mais tarde.')
       )
     }
+  }
+  private loadPiece() {
+    this.pieceService.getAll().subscribe(
+      pieces => this.customPiece = pieces,
+      error => alert('Erro ao carregar a lista')
+    )
   }
 
   private setPageTitle() {
@@ -109,6 +156,8 @@ export class CategoryFormComponent implements OnInit {
   }
 
   private createPendency(){
+    // SET CUSTOM PIECE ID IN FORM VALUE
+    this.pendencyForm.value.custom_piece_id = this.matchID;
     const pendency: Pendency = Object.assign(new Pendency(), this.pendencyForm.value)
 
     this.pendencyService.create(pendency)
@@ -119,6 +168,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   private updatePendency(){
+    this.pendencyForm.value.custom_piece_id = this.matchID;
     const pendency: Pendency = Object.assign(new Pendency(), this.pendencyForm.value);
 
     this.pendencyService.update(pendency)

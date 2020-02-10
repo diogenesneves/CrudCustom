@@ -8,43 +8,66 @@
         </li>
     </ol>
 </nav>
-
-<div class="row mb-4">
+<div class="row mb-3">
     <div class="col-md">
-        <h1 class="h2 border-left pl-2">
+        <h1 class="h2 pl-3">
             Lista de Peças
         </h1>    
     </div>
     <div class="col">
-        <a routerLink="new" class="btn btn-success float-right"> + Nova Peça</a>
+        <button pButton routerLink="new" type="button" label="+ Nova Peça" class="ui-button-raised ui-button-success float-right mr-3"></button>
     </div>
 </div>
-
-<input type="text" [(ngModel)]="pendencies.nome" placeholder="Pesquisar..." class="ml-3"/>
-
-<table width="98%" class=" table-sm table-hover ml-3 table-bordered">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nome da peça</th>
-        <th scope="col">Código</th>
-        <th scope="col">Valor</th>
-        <th scope="col">Status</th>
-        <th scope="col">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pendency of pendencies | customerNomeFilter:pendencies.nome; let i = index">
-        <td>{{pendency.id}}</td>
-        <td>{{pendency.nome}}</td>
-        <td>{{pendency.codigo}}</td>
-        <td>{{pendency.valor}}</td>
-        <td>{{pendency.status}}</td>
-        <td>
-            <a [routerLink]="[pendency.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
-            <button (click)="deletePendency(pendency)" class="btn btn-outline-danger btn-sm">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-   
-  </table>
+<div class="ml-3 mr-3">
+<p-table #dt [columns]="cols" [value]="pendencies" [paginator]="true" [rows]="10" [autoLayout]="true">
+    <ng-template pTemplate="caption">
+        <div style="text-align: right">        
+            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Filtrar..." (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th>AÇÕES</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns" [ngSwitch]="col.field">
+                <div *ngSwitchCase="'id'">
+                    <span *ngIf="rowData.id">{{rowData[col.field]}}</span>
+                </div>
+                <div *ngSwitchCase="'nome'">
+                    <span *ngIf="rowData.nome">{{rowData[col.field]}}</span>
+                </div>
+                <div *ngSwitchCase="'codigo'">
+                    <span *ngIf="rowData.codigo">{{rowData[col.field]}}</span>
+                </div>
+                <div *ngSwitchCase="'valor'">
+                    <span *ngIf="rowData.valor">{{rowData[col.field]}}</span>
+                </div>
+                <div *ngSwitchCase="'tipo'">
+                    <span *ngIf="rowData.tipo">{{rowData[col.field]}}</span>
+                </div>
+                <div *ngSwitchCase="'created'">
+                    <span *ngIf="rowData.created">{{rowData[col.field] | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                </div>
+                <div *ngSwitchCase="'modified'">
+                    <span *ngIf="rowData.modified">{{rowData[col.field] | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+                </div>
+                <div *ngSwitchCase="'status'">
+                    <span *ngIf="rowData.created">{{rowData[col.field] ? "ATIVO" : "INATIVO"}}</span>
+                </div>
+            </td>
+            <td class="actions-column">
+                <p-button type="button" icon="pi pi-pencil" class="mr-2" title="Editar" (click)="editPendency(rowData.id)" styleClass="ui-button-info" ></p-button>
+                <p-button type="button" icon="pi pi-trash" title="Excluir" (click)="deletePendency(rowData)" styleClass="ui-button-danger"></p-button>
+              </td>
+        </tr>
+    </ng-template>
+</p-table >
+</div>

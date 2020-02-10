@@ -28,6 +28,15 @@ export class PieceFormComponent implements OnInit {
     clear: 'Limpar'
   };
 
+  imaskConfig ={
+    mask: Number,
+    scale: 2,
+    thoushandsSeparator: '',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  }
+
   currentAction: string;
   pieceForm: FormGroup;
   pageTitle: string;
@@ -76,7 +85,7 @@ export class PieceFormComponent implements OnInit {
 
   submitForm(){
     this.submittingForm = true;
-    if(this.currentAction = "new")
+    if(this.currentAction == "new")
       this.createpiece();
     else
       this.updatepiece();

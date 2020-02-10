@@ -6,7 +6,11 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 
 import { CalendarModule } from "primeng/calendar"
-import { ReactiveFormsModule } from '@angular/forms';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {LightboxModule} from 'primeng/lightbox';
+
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +19,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CategoriesRoutingModule,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    AutoCompleteModule,
+    FormsModule,
+    LightboxModule
   ]
 })
 export class CategoriesModule { }

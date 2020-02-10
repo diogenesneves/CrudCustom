@@ -8,8 +8,12 @@ import { PieceFormComponent } from './piece-form/piece-form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CalendarModule } from "primeng/calendar"
 import {FileUploadModule} from 'primeng/fileupload';
+import {TableModule} from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+
 import { SearchPipe } from './shared/search.pipe';
 
+import {IMaskModule} from 'angular-imask';
 
 
 @NgModule({
@@ -20,7 +24,10 @@ import { SearchPipe } from './shared/search.pipe';
     ReactiveFormsModule,
     CalendarModule,
     FormsModule,
-    FileUploadModule
+    FileUploadModule,
+    TableModule,
+    DropdownModule,
+    IMaskModule
   ]
 })
 export class PiecesModule { }

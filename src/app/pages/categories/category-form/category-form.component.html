@@ -24,29 +24,43 @@
         </div>
         <div class="card-body">
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="name">Nome da revendedora</label>
+                <div class="form-group col-md-3">
+                    <label for="custom_piece">Selecione uma peça</label>
+                    <p-autoComplete [(ngModel)]="piece" [suggestions]="filteredPieces" (onSelect)="matchId(piece)" (completeMethod)="filterPieces($event)" [size]="30"
+                        [minLength]="1" placeholder="Digite para pesquisar..." [dropdown]="true"  formControlName="custom_piece_id" >
+                        <ng-template let-piece pTemplate="item">
+                            <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+                                <div style="font-size:18px;float:left;margin:10px 10px 0 0">{{piece}}</div>
+                            </div>
+                        </ng-template>
+                    </p-autoComplete>
+                </div>
+                <div class="col-md-5 mb-2" *ngIf="photoShow">
+                    <img class="rounded imagePreview" [src]="'http://sis.sandrapelincer.com.br/api/files/CustomPieces/photo/'+photo">
+                </div>
+                <div class="row col-md-12"></div>
+                <div class="form-group col-md-6">
+                    <label for="name">Nome revendedor(a)</label>
                     <input type="text" class="form-control" id="nome" formControlName="nome">
                 </div>
-                <div class="form-group col-md-8">
+                <div class="form-group col-md-6">
                     <label for="name">Descrição</label>
                     <input type="text" class="form-control" id="descricao" formControlName="descricao">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="status">Cor do Banho</label>
-                    <select name="corDoBanho" id="corDoBanho" class="form-control" formControlName="corDoBanho">
-                        <option value="rodioNegro">Ródio Negro</option>
-                        <option value="rodioClaro">Ródio Claro</option>
-                        <option value="ouro">Ouro</option>
-                        <option value="rose">Rose</option>
+                    <label for="cordobanho">Cor do Banho</label>
+                    <select name="corDoBanho" id="corDoBanho" class="form-control" formControlName="cordobanho">
+                        <option value="Rodio Negro">Ródio Negro</option>
+                        <option value="Rodio Claro">Ródio Claro</option>
+                        <option value="Ouro">Ouro</option>
+                        <option value="Rose">Rose</option>
                     </select>
                 </div>
-
                 <div class="form-group col-md-2">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control" formControlName="status">
-                    <option value="false">Pendente</option>
-                    <option value="true">Entregue</option>
+                    <option value=false>Pendente</option>
+                    <option value=true>Entregue</option>
                 </select>
                 </div>
 

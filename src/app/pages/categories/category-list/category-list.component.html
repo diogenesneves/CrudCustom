@@ -27,7 +27,8 @@
         <th scope="col">Nome Revendedora</th>
         <th scope="col">Descrição</th>
         <th scope="col">Cor</th>
-        <th scope="col">Data</th>
+        <th scope="col">Criação</th>
+        <th scope="col">Modificação</th>
         <th scope="col">Status</th>
         <th scope="col">Ações</th>
       </tr>
@@ -38,8 +39,9 @@
         <td>{{pendency.nome}}</td>
         <td>{{pendency.descricao}}</td>
         <td>{{pendency.cordobanho}}</td>
-        <td>{{pendency.datapedido}}</td>
-        <td>{{pendency.status}}</td>
+        <td>{{pendency.created | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{pendency.modified | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{pendency.status ? "ENTREGUE" : "PENDENTE"}}</td>
         <td>
             <a [routerLink]="[pendency.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
             <button (click)="deletePendency(pendency)" class="btn btn-outline-danger btn-sm">Excluir</button>

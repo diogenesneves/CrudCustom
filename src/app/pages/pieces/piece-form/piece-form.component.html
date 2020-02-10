@@ -1,7 +1,7 @@
 <nav class="mb-4">
     <ol class="breadcrumb" style="background-color: #eed4e7;">
         <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-        <li class="breadcrumb-item"><a routerLink="/pieces">Pendentes</a></li>
+        <li class="breadcrumb-item"><a routerLink="/pieces">Lista dePeças</a></li>
         <li class="breadcrumb-item active">{{pageTitle}}</li>
     </ol>
 </nav>
@@ -30,7 +30,7 @@
                 <div class="row col-md-10">
                     <div class="form-group">
                         <h3 class="first mb-3">{{imageTitle}}</h3>
-                        <p-fileUpload class="col-md-6"  previewWidth="110" chooseLabel="Escolher" [showUploadButton]="false" [showCancelButton]="false" 
+                        <p-fileUpload class="col-md-6"  previewWidth="150" chooseLabel="Escolher" [showUploadButton]="false" [showCancelButton]="false" 
                         name="demo[]" multiple="false" customUpload="true" type="file" accept="image/*" maxFileSize="1000000" (onSelect)="showPreview($event)">
                             <ng-template pTemplate="toolbar">
                                 <ul *ngIf="uploadedFiles.length">
@@ -51,14 +51,19 @@
                 <div class="form-group col-md-3">
                     <label for="tipo">Tipo</label>
                     <select name="tipo" id="tipo" class="form-control" formControlName="tipo">
-                        <option value="semiJoia">Semi Joia</option>
-                        <option value="ouro">Ouro</option>
-                        <option value="prata">Prata</option>
+                        <option value="Semi Jóia">Semi Joia</option>
+                        <option value="Ouro">Ouro</option>
+                        <option value="Prta">Prata</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="name">Valor</label>
-                    <input type="text" class="form-control" id="valor" formControlName="valor">
+                    <div class="input-group">
+                        <div class="imput-group-prepend">
+                            <div class="input-group-text">R$</div>
+                        </div>
+                        <input type="text" [imask]="imaskConfig" class="form-control" id="valor" formControlName="valor">
+                    </div>
                 </div>
                 <div class="form-group col-md-2">
                 <label for="status">Status</label>

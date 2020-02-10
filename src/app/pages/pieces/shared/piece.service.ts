@@ -38,7 +38,7 @@ export class PieceService {
   }
 
   update(piece: Piece): Observable<Piece>{
-    const url = `${this.apiPath}/${piece.id}`;
+    const url = `${this.apiPath}edit/${piece.id}.json`;
      return this.http.put(url, piece).pipe(
       catchError(this.handleError),
       map(this.jsonDataToPiece)
@@ -46,7 +46,7 @@ export class PieceService {
   }
 
   delete(id: number): Observable<any> {
-    const url = `${this.apiPath}/${id}`;
+    const url = `${this.apiPath}${'delete'}/${id}.json`;
       return this.http.delete(url).pipe(
         catchError(this.handleError),
         map(() => console.log("EXCLUÍDO COM SUCESSO!"))
